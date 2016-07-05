@@ -1,9 +1,8 @@
-Sources/main.o: ../Sources/main.c ../Includes/MK22F51212.h \
+Sources/wdog.o: ../Sources/wdog.c ../Includes/MK22F51212.h \
  ../Includes/core_cm4.h ../Includes/core_cmInstr.h \
  ../Includes/core_cmFunc.h ../Includes/core_cmSimd.h \
- ../Includes/system_MK22F51212.h ../Includes/uart1.h \
- ../Includes/mcu_tracer.h ../Includes/leds.h ../Includes/taskcall.h \
- ../Includes/wdog.h ../Includes/taskcall.h
+ ../Includes/system_MK22F51212.h ../Includes/wdog.h \
+ ../Includes/taskcall.h ../Includes/mcu_tracer.h ../Includes/taskcall.h
 
 ../Includes/MK22F51212.h:
 
@@ -17,14 +16,10 @@ Sources/main.o: ../Sources/main.c ../Includes/MK22F51212.h \
 
 ../Includes/system_MK22F51212.h:
 
-../Includes/uart1.h:
-
-../Includes/mcu_tracer.h:
-
-../Includes/leds.h:
+../Includes/wdog.h:
 
 ../Includes/taskcall.h:
 
-../Includes/wdog.h:
+../Includes/mcu_tracer.h:
 
 ../Includes/taskcall.h:

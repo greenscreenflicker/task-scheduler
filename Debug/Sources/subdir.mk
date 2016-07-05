@@ -10,7 +10,8 @@ C_SRCS += \
 ../Sources/mcu_tracer.c \
 ../Sources/taskcall.c \
 ../Sources/taskcall_hal.c \
-../Sources/uart1.c 
+../Sources/uart1.c \
+../Sources/wdog.c 
 
 OBJS += \
 ./Sources/console.o \
@@ -19,7 +20,8 @@ OBJS += \
 ./Sources/mcu_tracer.o \
 ./Sources/taskcall.o \
 ./Sources/taskcall_hal.o \
-./Sources/uart1.o 
+./Sources/uart1.o \
+./Sources/wdog.o 
 
 C_DEPS += \
 ./Sources/console.d \
@@ -28,7 +30,8 @@ C_DEPS += \
 ./Sources/mcu_tracer.d \
 ./Sources/taskcall.d \
 ./Sources/taskcall_hal.d \
-./Sources/uart1.d 
+./Sources/uart1.d \
+./Sources/wdog.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

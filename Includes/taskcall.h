@@ -4,6 +4,10 @@
  *  Created on: 17.07.2015
  *      Author: Michael Heidinger
  */
+
+#ifndef INCLUDES_TASKCALL_H_
+#define INCLUDES_TASKCALL_H_
+
 #include <stdint.h>
 
 typedef void (*prolog_ptr_f) (void);
@@ -26,3 +30,5 @@ void _taskcall_task_register(taskcall_t* task_ptr);
 void _taskcall_task_register_time(taskcall_t* task_ptr, int64_t time);
 void _taskcall_exec(void);
 void _taskcall_start(void);
+
+#endif

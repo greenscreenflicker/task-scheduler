@@ -99,7 +99,7 @@ extern "C" {
 
 #include <stdint.h>
 
-
+#define DISABLE_WDOG                 1
 #ifndef DISABLE_WDOG
   #define DISABLE_WDOG                 1
 #endif

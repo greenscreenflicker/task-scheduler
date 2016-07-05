@@ -34,6 +34,7 @@
 #include "mcu_tracer.h"
 #include "leds.h"
 #include "taskcall.h"
+#include "wdog.h"
 
 
 
@@ -45,6 +46,8 @@ void task_toogle_green_led(int64_t delay);
 taskcall_t blink_blue ={"blue_b",0,NULL,&task_toogle_blue_led,NULL,NULL};
 taskcall_t blink_red  ={"red_b",0,NULL,&task_toogle_red_led,NULL,NULL};
 taskcall_t blink_green={"green_b",0,NULL,&task_toogle_green_led,NULL,NULL};
+
+
 /*taskcall_t blink_green={"green_b",5,NULL,NULL,NULL,NULL};
 taskcall_t blink_red={"red_b",17,NULL,NULL,NULL,NULL};
 taskcall_t blink_pink={"pink",10,NULL,NULL,NULL,NULL};
@@ -102,20 +105,21 @@ void task_toogle_green_led(int64_t delay){
 }
 
 int main(void) {
+	SystemCoreClockUpdate();
 
-   volatile int count = 0;
-   SystemCoreClockUpdate();
-   init_leds();
-   mcu_tracer_config();
+	init_leds();
+	mcu_tracer_config();
 
+	mcu_tracer_msg("Starting up...");
 
-  // printf("SystemBusClock  = %ld\n", SystemBusClock);
-   //printf("SystemCoreClock = %ld\n", SystemCoreClock);
-   tracer_green=1;
-   _taskcall_task_register(&blink_blue);
-   _taskcall_task_register(&blink_red);
-   _taskcall_task_register(&blink_green);
-   _taskcall_start();
+	// printf("SystemBusClock  = %ld\n", SystemBusClock);
+	//printf("SystemCoreClock = %ld\n", SystemCoreClock);
+	tracer_green=1;
+	_taskcall_task_register(&blink_blue);
+	_taskcall_task_register(&blink_red);
+	_taskcall_task_register(&blink_green);
+	_taskcall_task_register_time(&task_watchdog_reset,(120000000));
+	_taskcall_start();
 
    while(1){
 	   //put here low priority tasks, like communication

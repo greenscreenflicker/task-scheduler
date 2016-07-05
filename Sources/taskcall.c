@@ -10,6 +10,7 @@
 #include <string.h>
 #include <taskcall.h>
 #include "taskcall_hal.h"
+#include "wdog.h"
 #include "MK22F51212.h"
 
 taskcall_t* taskcall_head=NULL;
@@ -116,6 +117,7 @@ void _taskcall_exec(void){
 		//avoids looping in when multiple tasks need to be exectuted
 		//(==> Speed improvement)
 		_taskcall_substract_time(_taskcaller_get_time());
+		//
 		time2execute=taskcall_head->time;
 
 		if(time2execute<1){
@@ -126,6 +128,7 @@ void _taskcall_exec(void){
 			_taskcall_task_first_remove();
 			//execute it!
 			execute->task_ptr(-time2execute);
+			//wdog_refresh();
 			_taskcall_active_time+=_taskcaller_get_time_passive();
 		}else if(taskcall_head->time>10){
 			//Is it really worth going to sleep?
