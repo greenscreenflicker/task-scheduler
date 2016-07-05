@@ -109,8 +109,7 @@ int main(void) {
 
 	init_leds();
 	mcu_tracer_config();
-
-	mcu_tracer_msg("Starting up...");
+	startup_reason_report();
 
 	// printf("SystemBusClock  = %ld\n", SystemBusClock);
 	//printf("SystemCoreClock = %ld\n", SystemCoreClock);

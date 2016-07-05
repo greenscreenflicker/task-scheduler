@@ -3,6 +3,7 @@
 #include "wdog.h"
 #include "mcu_tracer.h"
 #include "taskcall.h"
+#include "string.h"
 
 taskcall_t task_watchdog_reset={"wdog",0,NULL,&wdog_refresh_func,NULL,NULL};
 
@@ -62,5 +63,56 @@ void wdog_refresh_func(int64_t delay){
 		//mcu_tracer_msg("WDOG RESET");
 	}
 	_taskcall_task_register_time(&task_watchdog_reset,(120000000)*2-delay);
+}
+
+
+void startup_reason_report(void){
+	/*
+	char buffer[50];
+	sprintf(buffer,"Reset: %x", RCM->SRS0);
+	mcu_tracer_msg(buffer);
+	if(RCM->SRS0 ==0x82){
+		mcu_tracer_msg("Starting...");
+	}*/
+
+	if(RCM->SRS0 & RCM_SRS0_POR_MASK){
+		mcu_tracer_msg("Restart: PowerOnReset");
+	}
+	if(RCM->SRS0 & RCM_SRS0_PIN_MASK){
+		mcu_tracer_msg("Restart: Reset Pin");
+	}
+	if(RCM->SRS0 & RCM_SRS0_WDOG_MASK){
+		mcu_tracer_msg("Restart: Watchdog");
+	}
+	if(RCM->SRS0 & RCM_SRS0_LOL_MASK){
+		mcu_tracer_msg("Restart: Loss of Lock");
+	}
+	if(RCM->SRS0 & RCM_SRS0_LOC_MASK){
+		mcu_tracer_msg("Restart: Loss of Clock");
+	}
+	if(RCM->SRS0 & RCM_SRS0_LVD_MASK){
+		mcu_tracer_msg("Restart: Low Voltage Detect");
+	}
+	if(RCM->SRS0 & RCM_SRS0_WAKEUP_MASK){
+		mcu_tracer_msg("Restart: Wakeup Reset");
+	}
+	if(RCM->SRS1 & RCM_SRS1_SACKERR_MASK){
+		mcu_tracer_msg("Restart: Stop Mode Acknowledge Error Reset");
+	}
+	if(RCM->SRS1 & RCM_SRS1_EZPT_MASK){
+		mcu_tracer_msg("Restart: EzPort Reset");
+	}
+	if(RCM->SRS1 & RCM_SRS1_MDM_AP_MASK){
+		mcu_tracer_msg("Restart: MDM-AP System");
+	}
+	if(RCM->SRS1 & RCM_SRS1_SW_MASK){
+		mcu_tracer_msg("Restart: Software");
+	}
+	if(RCM->SRS1 & RCM_SRS1_LOCKUP_MASK){
+		mcu_tracer_msg("Restart: Lockup");
+	}
+	if(RCM->SRS1 & RCM_SRS1_JTAG_MASK){
+		mcu_tracer_msg("Restart: JTAG");
+	}
 }
 
