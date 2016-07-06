@@ -35,9 +35,9 @@
 #include "leds.h"
 #include "taskcall.h"
 #include "wdog.h"
+#include "lowvoltagewarning.h"
 
-
-
+//delte
 
 void task_toogle_blue_led(int64_t delay);
 void task_toogle_red_led(int64_t delay);
@@ -68,6 +68,7 @@ void delay(void) {
  * This function is used for the System Timer interrupt handler.
  *
  */
+
 void SysTick_Handler(void) {
 	//blueLedToggle();
 
@@ -106,7 +107,7 @@ void task_toogle_green_led(int64_t delay){
 
 int main(void) {
 	SystemCoreClockUpdate();
-
+	lvd_init();
 	init_leds();
 	mcu_tracer_config();
 	startup_reason_report();
@@ -125,6 +126,14 @@ int main(void) {
        mcu_tracer_process();
        mainloop_iterations=mainloop_iterations+1;
        if(mainloop_iterations>1000000) mainloop_iterations=0;
+
+       if(tracer_blue){
+    	   tracer_blue=0;
+    	   char buf[50];
+
+    	   sprintf(buf,"PMC_LVDSC2: %x",PMC->LVDSC2);
+    	   mcu_tracer_msg(buf);
+       }
    }
    return 0;
 }

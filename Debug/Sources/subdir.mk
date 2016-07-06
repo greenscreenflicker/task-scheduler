@@ -6,6 +6,7 @@
 C_SRCS += \
 ../Sources/console.c \
 ../Sources/leds.c \
+../Sources/lowvoltagewarning.c \
 ../Sources/main.c \
 ../Sources/mcu_tracer.c \
 ../Sources/taskcall.c \
@@ -16,6 +17,7 @@ C_SRCS += \
 OBJS += \
 ./Sources/console.o \
 ./Sources/leds.o \
+./Sources/lowvoltagewarning.o \
 ./Sources/main.o \
 ./Sources/mcu_tracer.o \
 ./Sources/taskcall.o \
@@ -26,6 +28,7 @@ OBJS += \
 C_DEPS += \
 ./Sources/console.d \
 ./Sources/leds.d \
+./Sources/lowvoltagewarning.d \
 ./Sources/main.d \
 ./Sources/mcu_tracer.d \
 ./Sources/taskcall.d \
