@@ -118,7 +118,7 @@ int main(void) {
 	_taskcall_task_register(&blink_blue);
 	_taskcall_task_register(&blink_red);
 	_taskcall_task_register(&blink_green);
-	_taskcall_task_register_time(&task_watchdog_reset,(120000000));
+	_taskcall_task_register_time(&task_watchdog_reset,(120000000*2));
 	_taskcall_start();
 
    while(1){
@@ -126,14 +126,6 @@ int main(void) {
        mcu_tracer_process();
        mainloop_iterations=mainloop_iterations+1;
        if(mainloop_iterations>1000000) mainloop_iterations=0;
-
-       if(tracer_blue){
-    	   tracer_blue=0;
-    	   char buf[50];
-
-    	   sprintf(buf,"PMC_LVDSC2: %x",PMC->LVDSC2);
-    	   mcu_tracer_msg(buf);
-       }
    }
    return 0;
 }

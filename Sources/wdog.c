@@ -13,7 +13,8 @@ void wdog_init(void){
     value = WDOG_STCTRLH_WDOGEN(1) //enable watchdog
     		| WDOG_STCTRLH_CLKSRC(0) //0=lpo=1kHz
 			| WDOG_STCTRLH_IRQRSTEN(0) //0
-			| WDOG_STCTRLH_WINEN(0) //0=window comparator disabled
+			| WDOG_STCTRLH_WINEN(1) //0=window comparator disabled
+									//1=window comparator enabled
 			| WDOG_STCTRLH_ALLOWUPDATE(0)
 			| WDOG_STCTRLH_DBGEN(0) | //watchdog disabled in debug mode
             WDOG_STCTRLH_STOPEN(1) | //watchdog 0=disabled in stop mode
@@ -29,7 +30,7 @@ void wdog_init(void){
 	__asm__("NOP"); // We need to wait one cycle
 	WDOG->PRESC = 0;
 	WDOG->WINH = 0;
-	WDOG->WINL = 0;
+	WDOG->WINL = (uint16_t)900*1.9;
 	WDOG->TOVALH = 0;
     WDOG->TOVALL = 5000;
 
@@ -57,23 +58,14 @@ void wdog_refresh(void){
 
 }
 
+//Responsable for refreshing the watchdog
 void wdog_refresh_func(int64_t delay){
-	if(tracer_green){
-		wdog_refresh();
-		//mcu_tracer_msg("WDOG RESET");
-	}
+	wdog_refresh();
 	_taskcall_task_register_time(&task_watchdog_reset,(120000000)*2-delay);
 }
 
-
+//Reports reason for startup
 void startup_reason_report(void){
-	/*
-	char buffer[50];
-	sprintf(buffer,"Reset: %x", RCM->SRS0);
-	mcu_tracer_msg(buffer);
-	if(RCM->SRS0 ==0x82){
-		mcu_tracer_msg("Starting...");
-	}*/
 
 	if(RCM->SRS0 & RCM_SRS0_POR_MASK){
 		mcu_tracer_msg("Restart: PowerOnReset");

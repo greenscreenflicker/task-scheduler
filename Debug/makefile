@@ -51,7 +51,7 @@ all: task-scheduler2.elf secondary-outputs
 task-scheduler2.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "MK22FN512xxx12_flash.ld" -Xlinker --gc-sections -L"/home/mmh/git/task-scheduler2/Project_Settings/Linker_Files" -Wl,-Map,"task-scheduler2.map" -specs=nano.specs -specs=nosys.specs -o "task-scheduler2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "MK22FN512xxx12_flash.ld" -Xlinker --gc-sections -L"/home/mmh/git/task-scheduler8/Project_Settings/Linker_Files" -Wl,-Map,"task-scheduler2.map" -specs=nano.specs -specs=nosys.specs -o "task-scheduler2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
