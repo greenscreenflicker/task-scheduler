@@ -160,9 +160,9 @@ void mcu_tracer_process(void){
 }
 
 void mcu_tracer_write_serial(char data){
-  global_checksum=global_checksum^data;
-  UART1_dma_complete_wait();
-  sendbuf[sendbuf_pos++]=data;
+	UART1_dma_complete_wait();
+	global_checksum=global_checksum^data;
+	sendbuf[sendbuf_pos++]=data;
 }
 
 void mcu_tracer_flush_buffer(void){
